@@ -1,0 +1,12 @@
+#version 330
+
+in vec3 fragment_color;
+
+uniform float alpha_value;
+
+out vec4 out_color;
+
+void main()
+{
+    out_color = vec4(fragment_color, alpha_value);
+}

@@ -1,0 +1,1 @@
+PACMAN_SPEED = 30

@@ -6,13 +6,13 @@ from Renderer.RendererMaster import RendererMaster
 
 from InputHandlers.PacmanInputHandler import PacmanInputHandler
 
-from GameActors import GameActors
-#from GameController import GameController
+from Actors.ActorsController import ActorsController
+from Actors.Ghost import Ghost
+from Actors.Direction import Direction
 
 import Config
 
-from NetworkController1 import NetworkController1
-
+from Util.NetworkController import NetworkController
 
 
 class Application:
@@ -24,11 +24,20 @@ class Application:
 
         self.renderer = RendererMaster()
 
-        self.actors = GameActors()
-        self.networkController = NetworkController1(self.actors)
+        self.actorsController = ActorsController()
+        self.networkController = NetworkController(self.actorsController)
 
 
     def runLoop(self):
+
+        self.renderer.setFruits(self.actorsController.fruits)
+
+        self.actorsController.addGhost([4, 7], Direction.DOWN, 3.0, "1", Ghost.GhostColor.RED)
+        self.actorsController.addGhost([4, 23], Direction.RIGHT, 3.0, "2", Ghost.GhostColor.ORANGE)
+        self.actorsController.addGhost([23, 7], Direction.LEFT, 3.0, "3", Ghost.GhostColor.PURPLE)
+        self.actorsController.addGhost([23, 23], Direction.UP, 3.0, "4", Ghost.GhostColor.GREEN)
+
+        self.renderer.addPresentComponents(self.actorsController)
 
         while(   
             (not self.networkController.processInitializationData() or
@@ -46,8 +55,8 @@ class Application:
             glfw.swap_buffers(self.window)
 
 
-        self.renderer.addPacmans(self.actors.player_1_pacman)
-        pacmanInputHandler = PacmanInputHandler(self.actors.player_1_pacman)
+        self.renderer.addPresentComponents(self.actorsController)
+        pacmanInputHandler = PacmanInputHandler(self.actorsController.player_1_pacman)
 
         while not glfw.window_should_close(self.window):
 
@@ -56,11 +65,10 @@ class Application:
 
             camera.process_keyboard(self.window, 0.1)
             
-            self.networkController.processGameStateDataData()
+            self.networkController.processGameStateData()
             pacmanInputHandler.handleInput(self.window)
 
-            self.actors.player_1_pacman.update()
-            #self.actors.player_2_pacman.update()
+            self.actorsController.update()
             
             self.renderer.render(self.window, camera)
 
@@ -68,90 +76,7 @@ class Application:
 
         glfw.terminate()
 
-
-
-
-    # def runLoop(self):
-
-    #     renderer = RendererMaster()
-
-    #     while not glfw.window_should_close(self.window):
-
-    #         glfw.poll_events()
-    #         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-
-    #         camera.process_keyboard(self.window, 0.1)
-
-    #         renderer.render(self.window, camera)
-
-    #         glfw.swap_buffers(self.window)
-
-    #     glfw.terminate()
-
-
-    # def runLoop(self):
-
-    #     renderer = RendererMaster()
-    #     #renderer.addPacmans(self.gameController.player_1_pacman)#self.pacman)#)
-
-    #     pacmanInputHandler = None
-
-    #     while not glfw.window_should_close(self.window):
-
-    #         glfw.poll_events()
-    #         glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT)
-
-    #         if self.networkController.initializationDone == True:
-
-    #             renderer.addPacmans(self.gameController.player_1_pacman, self.gameController.player_2_pacman)
-    #             pacmanInputHandler = PacmanInputHandler(self.gameController.player_1_pacman)
-
-
-    #         camera.process_keyboard(self.window, 0.1)
-            
-    #         if self.networkController.initializationDone == True:
-
-    #             pacmanInputHandler.handleInput(self.window)
-    #             self.gameController.player_1_pacman.update()
-    #             self.gameController.player_2_pacman.update()
-            
-
-    #         renderer.render(self.window, camera)
-
-    #         glfw.swap_buffers(self.window)
-
-    #     glfw.terminate()
-
-
-    # def __initializeActors(self):
-            
-    #     # Connect to server
-
-    #     self.gameController = GameController()
-    #     self.networkController = NetworkController(self.gameController)
-
-    #     if self.networkController.connectedToServer == True:
-    #         self.networkController.initializeComponents()
-        #Network().setRecievedDataParser(self.networkDataParser)
-        
-
-
-        # while not self.networkDataParser.IsInitializationDone():
-        #     pass
-
-
-
-
-        # self.gameController.addPacman([0, 0], Pacman.Direction.NONE, '0', True)
-
-        # self.pacman = Pacman([0, 0], Pacman.Direction.NONE, 0)
-        # self.pacman1 = Pacman([0, 1], Pacman.Direction.NONE, 0)
-        # self.pacman2 = Pacman([1, 1], Pacman.Direction.NONE, 0)
-        # self.pacman3 = Pacman([2, 1], Pacman.Direction.NONE, 0)
-        # self.pacman4 = Pacman([3, 1], Pacman.Direction.NONE, 0)
-
-
-        
+     
     def __initializeWindow(self):
         if not glfw.init():
             return
@@ -161,7 +86,10 @@ class Application:
         glfw.window_hint(glfw.OPENGL_PROFILE, glfw.OPENGL_CORE_PROFILE)
         glfw.window_hint(glfw.OPENGL_FORWARD_COMPAT, glfw.TRUE)
 
-        self.window = glfw.create_window(1100, 900, "My OpenGL window", None, None)
+        monitor = glfw.get_primary_monitor()
+        mode = glfw.get_video_mode(monitor)
+
+        self.window = glfw.create_window(Config.WINDOW_WIDTH, Config.WINDOW_HEIGHT, "My OpenGL window", None, None)
 
         if not self.window:
             glfw.terminate()

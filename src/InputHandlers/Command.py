@@ -1,5 +1,6 @@
 import abc
 from Actors.Actor import Actor
+from Actors.Direction import Direction
 
 
 class Command:
@@ -10,19 +11,19 @@ class Command:
 
 class MoveLeft(Command):
     def execute(self, actor : Actor):
-        actor.setTurnSignal(Actor.Direction.LEFT)
+        actor.setTurnSignal(Direction.LEFT)
 
 
 class MoveUp(Command):
     def execute(self, actor : Actor):
-        actor.setTurnSignal(Actor.Direction.UP)
+        actor.setTurnSignal(Direction.UP)
 
 
 class MoveRight(Command):
     def execute(self, actor : Actor):
-        actor.setTurnSignal(Actor.Direction.RIGHT)
+        actor.setTurnSignal(Direction.RIGHT)
 
 
 class MoveDown(Command):
     def execute(self, actor : Actor):
-        actor.setTurnSignal(Actor.Direction.DOWN)
+        actor.setTurnSignal(Direction.DOWN)

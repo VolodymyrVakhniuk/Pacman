@@ -1,8 +1,7 @@
 import socket
 import threading
 
-#from Util.NetworkDataParser import NetworkDataParser
-
+from queue import Queue
 
 
 class Network(object):
@@ -23,38 +22,39 @@ class Network(object):
 
     class __Network:
         def __init__(self):
-        
-            self.__makeClientSocket('10.0.0.204', 4040)
 
-            # self.recieveTread = threading.Thread(target=self.recieveData, args=(1,), daemon=True)
-            # self.recieveTread.start()
+            self.__message_queue = Queue()
 
+            self.connectionEvent = threading.Event()
 
-        # def setRecievedDataParser(self, parser : NetworkDataParser):
-        #     self.parser = parser
-
-
-        def __makeClientSocket(self, ip : str, port : int):
-            print("Making a socket")
             self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+
+            self.connectTread = threading.Thread(target=self.__connect, args=('127.0.0.1', 4040), daemon=True)
+            self.connectTread.start()
+
+            self.recieveTread = threading.Thread(target=self.recieveData, args=(), daemon=True)
+            self.recieveTread.start()
+
+
+        def isConnected(self):
+            return self.connectionEvent.is_set()
+        
+
+        def getMessageQueue(self) -> Queue:
+            return self.__message_queue
+
+
+        def __connect(self, ip : str, port : int):
             self.client.connect((ip, port))
+            self.connectionEvent.set()
 
 
         def recieveData(self):
-            #while True:
-                # data = self.client.recv(4040)
-                # self.recievedSrting = data.decode("utf-8")
-
-                #self.parser.parse(self.recievedSrting)
-
+            self.connectionEvent.wait()
+            while True:
                 data = self.client.recv(4040)
-                return data.decode("utf-8")
+                self.__message_queue.put(data.decode("utf-8"))
 
 
         def sendData(self, data : str):
-            
-            print("SENDING " + data)
             self.client.sendall(str.encode(data))
-
-
-    

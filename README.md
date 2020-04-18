@@ -10,6 +10,7 @@ Multiplayer 3D clone of classical Pacman.
 
 ## Install and run
 I assume the user has Python and Node.js installed.
+
 To setup:
 ``` bash
 # Clone the repository

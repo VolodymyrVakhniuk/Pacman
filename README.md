@@ -10,7 +10,7 @@ Multiplayer 3D clone of classical Pacman.
 
 ## Install
 ``` bash
-# I assume that the user has Python installed
+I assume that the user has Python installed
 
 # Clone the repository
 $ git clone https://github.com/VolodymyrVakhniuk/Pacman

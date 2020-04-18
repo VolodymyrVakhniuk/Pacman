@@ -9,7 +9,7 @@ Multiplayer 3D clone of classical Pacman.
 
 
 ## Install and run
-I assume the user has Python installed.
+I assume the user has Python and Node.js installed.
 To setup:
 ``` bash
 # Clone the repository
@@ -20,11 +20,16 @@ cd Pacman/src
 pip3 install PyOpenGL PyOpenGL_accelerate numpy glfw pyrr
 ```
 To run:
+To run the server:
+``` bash
+node main2.js
+```
+To run the game:
 ``` bash
 python3 main.py
 ```
 
-
 ## Made with:
 - Python
 - OpenGL
+- Node.js

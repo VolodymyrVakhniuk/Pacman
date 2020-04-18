@@ -11,7 +11,7 @@ Multiplayer 3D clone of classical Pacman.
 ## Install
 ``` bash
 # Clone the repository
-$ git clone https://github.com/kirillovmr/raspi-launcher.git
+$ git clone https://github.com/VolodymyrVakhniuk/Pacman
 
 # Open the terminal and install
 $ pip install PyOpenGL PyOpenGL_accelerate
@@ -19,9 +19,6 @@ $ pip install numpy
 $ pip install glfw
 $ pip install pyrr
 ```
-
-
-
 
 ## Made with:
 - Python

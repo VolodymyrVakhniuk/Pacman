@@ -8,22 +8,22 @@ Multiplayer 3D clone of classical Pacman.
 - [Presentation video](https://youtu.be/9IkYypi8o9U) - Video showcase of the project.
 
 
-## Install
-``` bash
+## Install and run
 I assume the user has Python installed.
-
+To setup:
+``` bash
 # Clone the repository
-$ git clone https://github.com/VolodymyrVakhniuk/Pacman
+git clone https://github.com/VolodymyrVakhniuk/Pacman
+cd Pacman/src
 
 # Open the terminal and install
-$ pip3 install PyOpenGL PyOpenGL_accelerate
-$ pip3 install numpy
-$ pip3 install glfw
-$ pip3 install pyrr
-
-# To run 
-brew install glfw3
+pip3 install PyOpenGL PyOpenGL_accelerate numpy glfw pyrr
 ```
+To run:
+``` bash
+python3 main.py
+```
+
 
 ## Made with:
 - Python

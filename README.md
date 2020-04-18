@@ -13,17 +13,11 @@ Multiplayer 3D clone of classical Pacman.
 # Clone the repository
 $ git clone https://github.com/VolodymyrVakhniuk/Pacman
 
-# Download Python
-For Mac OS
-$ brew install python
-For Windows
-$ todo
-
 # Open the terminal and install
-$ pip install PyOpenGL PyOpenGL_accelerate
-$ pip install numpy
-$ pip install glfw
-$ pip install pyrr
+$ pip3 install PyOpenGL PyOpenGL_accelerate
+$ pip3 install numpy
+$ pip3 install glfw
+$ pip3 install pyrr
 ```
 
 ## Made with:

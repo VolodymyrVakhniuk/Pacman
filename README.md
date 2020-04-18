@@ -20,6 +20,7 @@ cd Pacman/src
 pip3 install PyOpenGL PyOpenGL_accelerate numpy glfw pyrr
 ```
 To run:
+
 To run the server:
 ``` bash
 node main2.js

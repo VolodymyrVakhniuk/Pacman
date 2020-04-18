@@ -20,6 +20,9 @@ $ pip3 install PyOpenGL PyOpenGL_accelerate
 $ pip3 install numpy
 $ pip3 install glfw
 $ pip3 install pyrr
+
+# To run 
+brew install glfw3
 ```
 
 ## Made with:

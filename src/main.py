@@ -9,5 +9,5 @@ from Application import Application
 
 
 
-app = Application()
-app.runLoop()
+#app = Application()
+#app.runLoop()
